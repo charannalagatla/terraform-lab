@@ -1,29 +1,49 @@
-name: Terraform Check
+name: Terraform Validation
 
 on:
   push:
-    branches:
-      - main
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
 
 jobs:
-  terraform:
+  terraform-check:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Format
+      - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
-      - name: Terraform Init
-        run: terraform init
+      - name: Init and Validate Day1
+        working-directory: ./day1
+        run: |
+          terraform init
+          terraform validate
+          terraform plan
 
-      - name: Terraform Validate
-        run: terraform validate
+      - name: Init and Validate Day2
+        working-directory: ./day2
+        run: |
+          terraform init
+          terraform validate
+          terraform plan -var-file="dev.tfvars"
 
-      - name: Terraform Plan
-        run: terraform plan
+      - name: Init and Validate Day3
+        working-directory: ./day3
+        run: |
+          terraform init
+          terraform validate
+          terraform plan
+
+      - name: Init and Validate Day4
+        working-directory: ./day4
+        run: |
+          terraform init
+          terraform validate
+          terraform plan

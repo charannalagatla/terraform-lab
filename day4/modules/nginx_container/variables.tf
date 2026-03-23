@@ -1,11 +1,12 @@
 variable "container_name" {
-  type = string
+  description = "Name of the container"
 }
 
 variable "container_port" {
-  type = number
+  description = "External port to expose"
 }
 
 variable "image_name" {
-  type = string
+  description = "Docker image to use"
+  default     = "nginx:latest"
 }

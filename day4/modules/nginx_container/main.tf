@@ -7,13 +7,14 @@ terraform {
   }
 }
 
-resource "docker_image" "nginx" {
-  name = var.image_name
+resource "docker_image" "this" {
+  name         = var.image_name
+  keep_locally = true
 }
 
-resource "docker_container" "nginx_container" {
+resource "docker_container" "this" {
+  image = docker_image.this.image_id
   name  = var.container_name
-  image = docker_image.nginx.image_id
 
   ports {
     internal = 80
